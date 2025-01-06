@@ -1,0 +1,32 @@
+app = 'packimo'
+primary_region = 'sea'
+
+[build]
+  dockerfile = 'Dockerfile'
+
+[env]
+  JAVA_OPTS = '-Xmx3G -Xms1G'
+
+[[mounts]]
+  source = 'vol_packimo'
+  destination = '/minecraft'
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 25565
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    port = 25565
+
+  [services.concurrency]
+    type = 'connections'
+    hard_limit = 15
+    soft_limit = 10
+
+[[vm]]
+  cpu_kind = 'performance'
+  cpus = 2
+  memory_mb = 4096
